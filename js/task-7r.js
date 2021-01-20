@@ -27,11 +27,14 @@ const account = {
    * Принимает сумму и тип транзакции.
    */
   createTransaction(amount, type) {
-    const objectTransaction = {
-      amount: amount,
-      type: type,
-      id: Math.random() * 10**16,
-    };
+    let objectTransaction = {};
+    
+    objectTransaction.type = type;
+    
+    objectTransaction.amount = amount;
+    objectTransaction.id = Math.random() * 10 ** 17;
+    // objectTransaction.id = Date.now();
+
     return objectTransaction;
   },
 
@@ -42,9 +45,8 @@ const account = {
    * после чего добавляет его в историю транзакций
    */
   deposit(amount) {
-    createTransaction();
-    this.transactions.push(objectTransaction);
-    return (this.balance = objectTransaction.amount);
+    this.transactions.push(this.createTransaction(amount, Transaction.DEPOSIT));
+    return (this.balance += amount);
   },
 
   /*
@@ -57,12 +59,13 @@ const account = {
    * о том, что снятие такой суммы не возможно, недостаточно средств.
    */
   withdraw(amount) {
-    createTransaction();
-    objectTransaction.type = 'deposit'
-    this.transactions.push(objectTransaction);
-    return this.balance < objectTransaction.amount
-      ? `Cнятие ${objectTransaction.amount} не возможно, недостаточно средств`
-      : (this.balance = this.balance - objectTransaction.amount);
+    this.transactions.push(this.createTransaction(amount, Transaction.WITHDRAW));
+      
+    if (this.balance < amount) {
+      return `Cнятие ${amount} не возможно, недостаточно средств`;
+    }
+    this.balance -= amount;
+    return 'Операция проведена успешно';
   },
 
   /*
@@ -76,7 +79,7 @@ const account = {
    * Метод ищет и возвращает объект транзации по id
    */
   getTransactionDetails(id) {
-    for (let transaction of transactions) {
+    for (let transaction of this.transactions) {
       transaction.id === id
         ? console.log(transaction)
         : console.log(`Трансакции по id: ${id} в истории трансакций не надено`);
@@ -90,19 +93,38 @@ const account = {
    */
   getTransactionTotal(type) {
     let total = 0;
-    for (let transaction of transactions) {
-      if (transaction.type === type) {
-        total += transaction.amount;
-      }
+    for (let transaction of this.transactions) {
+      transaction.type === type
+        ? total += transaction.amount
+        : 'Error'
+      
     }
     return total;
   },
 };
-// console.log(account.createTransaction(100, Transaction.DEPOSIT));
-// console.log(account.createTransaction(1300, Transaction.DEPOSIT));
-// console.log(account.createTransaction(1500, Transaction.DEPOSIT));
+
+console.log(account.createTransaction(1500, Transaction.DEPOSIT));
 // console.log(account.createTransaction(1800, Transaction.WITHDRAW));
 // console.log(account.createTransaction(1700, Transaction.DEPOSIT));
 // console.log(account.createTransaction(1500, Transaction.WITHDRAW));
 // console.log(account.createTransaction(1500, Transaction.WITHDRAW));
-console.log(withdraw(200));
+
+console.log(account.deposit(1500));
+console.log(account.deposit(1500));
+console.log(account.deposit(1500));
+console.log(account.deposit(1500));
+// console.log(account.createTransaction(100, Transaction.DEPOSIT));
+// console.log(account.createTransaction(1300, 'deposit'));
+console.log(account.withdraw(1500));
+console.log(account.withdraw(1500));
+console.log(account.withdraw(1500));
+console.log(account.withdraw(1500));
+console.log(account.withdraw(1500));
+console.log(account.withdraw(1500));
+console.log(account.getBalance());
+console.log(account.transactions);
+console.log(account.getTransactionDetails(1611182701828));
+console.log(account.getTransactionDetails(1611182701828));
+console.log(account.getTransactionTotal(Transaction.DEPOSIT));
+console.log(account.getTransactionTotal(Transaction.WITHDRAW));
+
