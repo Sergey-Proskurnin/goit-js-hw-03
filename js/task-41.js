@@ -93,9 +93,9 @@ if (this.potions[i][key] === oldName) {
 // Пиши код выше этой строки
 
 //   console.log(atTheOldToad.getPotions());
-//   console.log(atTheOldToad.addPotion({ name: 'Невидимка', price: 620 }));
+  console.log(atTheOldToad.addPotion({ name: 'Невидимка', price: 620 }));
 //   console.log(atTheOldToad.addPotion({ name: 'Зелье силы', price: 270 }));
-  console.log(atTheOldToad.removePotion('Дыхание дракона'));
+  // console.log(atTheOldToad.removePotion('Дыхание дракона'));
 //   console.log(atTheOldToad.removePotion('Зелье скорости'));
 //   console.log(atTheOldToad.removePotion(atTheOldToad.updatePotionName('Дыхание дракона', 'Полиморф')));
 // console.log(atTheOldToad.updatePotionName('Каменная кожа', 'Зелье неуязвимости'));
