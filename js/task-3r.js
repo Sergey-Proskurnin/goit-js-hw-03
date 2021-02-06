@@ -9,6 +9,8 @@ const findBestEmployee = function(employees) {
   console.log(indexBigTask);
   return Object.keys(employees)[indexBigTask];
 };
+const findBestEmployee = (employees) => Object.entries(employees).sort((a, b) => b[1] - a[1])[0][0];
+
 
 /*
  * Вызовы функции для проверки работоспособности твоей реализации.
